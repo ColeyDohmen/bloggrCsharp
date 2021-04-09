@@ -9,23 +9,26 @@ USE bloggrcoley;
 --   PRIMARY KEY (id)
 -- );
 
--- CREATE TABLE blogs
--- (
--- id VARCHAR(255) NOT NULL,
--- title VARCHAR(255),
--- body VARCHAR(255),
--- imgUrl VARCHAR(255),
--- published BOOLEAN,
--- creatorId INT NOT NULL,
--- PRIMARY KEY (id)
+CREATE TABLE blogs
+(
+creatorId VARCHAR(255) NOT NULL,
+id INT NOT NULL AUTO_INCREMENT,
+title VARCHAR(255),
+body VARCHAR(255),
+imgUrl VARCHAR(255),
+published TINYINT,
+PRIMARY KEY (id)
 
--- );
+);
 
--- CREATE TABLE comments
--- (
--- id VARCHAR(255) NOT NULL,
--- creatorId INT NOT NULL,
--- body VARCHAR(255),
--- blog VARCHAR(255),
--- PRIMARY KEY (id)
--- );
+CREATE TABLE comments
+(
+creatorId VARCHAR(255) NOT NULL,
+id INT NOT NULL AUTO_INCREMENT,
+body VARCHAR(255),
+blog VARCHAR(255),
+PRIMARY KEY (id)
+);
+
+-- DROP TABLE blogs;
+-- DROP TABLE comments;
