@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using bloggrCsharp.Models;
 using bloggrCsharp.Services;
+using CodeWorks.Auth0Provider;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bloggrCsharp.Controllers
@@ -33,11 +36,17 @@ namespace bloggrCsharp.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Blog> Create([FromBody] Blog newBlog)
+        [Authorize]
+        public async Task<ActionResult<Blog>> CreateAsync([FromBody] Blog newBlog)
         {
             try
             {
-                return Ok(_service.Create(newBlog));
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                newBlog.CreatorId = userInfo.Id;
+                Blog created = _service.Create(newBlog);
+                //this is your 'populate' for create
+                created.Creator = userInfo;
+                return Ok(created);
 
             }
             catch (Exception err)
