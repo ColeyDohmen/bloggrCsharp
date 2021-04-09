@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using bloggrCsharp.Repositories;
+using bloggrCsharp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MySqlConnector;
 
 namespace bloggrCsharp
 {
@@ -32,8 +36,18 @@ namespace bloggrCsharp
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "bloggrCsharp", Version = "v1" });
             });
-        }
 
+            services.AddTransient<ProfilesService>();
+            services.AddTransient<ProfilesRepository>();
+
+
+            services.AddScoped<IDbConnection>(x => CreateDbConnection());
+        }
+        private IDbConnection CreateDbConnection()
+        {
+            string connectionString = Configuration["db:gearhost"];
+            return new MySqlConnection(connectionString);
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
