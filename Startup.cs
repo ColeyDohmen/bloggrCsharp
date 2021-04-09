@@ -39,6 +39,10 @@ namespace bloggrCsharp
 
             services.AddTransient<ProfilesService>();
             services.AddTransient<ProfilesRepository>();
+            services.AddTransient<BlogsService>();
+            services.AddTransient<BlogsRepository>();
+            // services.AddTransient<CommentsService>();
+            // services.AddTransient<CommentsRepository>();
 
 
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
