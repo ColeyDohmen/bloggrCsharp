@@ -33,5 +33,11 @@ namespace bloggrCsharp.Repositories
             newBlog.Id = id;
             return newBlog;
         }
+
+        internal Blog GetById(int id)
+        {
+            string sql = @"SELECT * from blogs WHERE id = @Id;";
+            return _db.QueryFirstOrDefault<Blog>(sql, new { id });
+        }
     }
 }

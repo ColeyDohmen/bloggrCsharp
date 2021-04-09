@@ -23,5 +23,15 @@ namespace bloggrCsharp.Services
         {
             return _repo.Create(newBlog);
         }
+
+        internal Blog GetById(int id)
+        {
+            Blog data = _repo.GetById(id);
+            if (data == null)
+            {
+                throw new Exception("Invalid Id");
+            }
+            return data;
+        }
     }
 }

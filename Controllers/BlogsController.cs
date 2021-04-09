@@ -35,6 +35,20 @@ namespace bloggrCsharp.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Blog> Get(int id)
+        {
+            try
+            {
+                return Ok(_service.GetById(id));
+            }
+            catch (Exception err)
+            {
+
+                return BadRequest(err.Message);
+            }
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<Blog>> CreateAsync([FromBody] Blog newBlog)
