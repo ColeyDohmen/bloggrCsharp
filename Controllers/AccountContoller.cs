@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using latewinter_artcollective.Models;
-using latewinter_artcollective.Services;
 using CodeWorks.Auth0Provider;
+using bloggrCsharp.Services;
+using bloggrCsharp.Models;
 
 namespace bloggrCsharp.Controllers
 {
@@ -19,12 +19,11 @@ namespace bloggrCsharp.Controllers
     public class AccountController : ControllerBase
     {
         private readonly ProfilesService _pservice;
-        private readonly AdmissionsService _admservice;
+        // private readonly AdmissionsService _admservice;
 
-        public AccountController(ProfilesService pservice, AdmissionsService admservice)
+        public AccountController(ProfilesService pservice)
         {
             _pservice = pservice;
-            _admservice = admservice;
         }
 
         [HttpGet]
@@ -46,19 +45,19 @@ namespace bloggrCsharp.Controllers
         }
 
 
-        [HttpGet("admissions")]
-        public async Task<ActionResult<IEnumerable<Admission>>> GetAdmissions()
-        {
-            try
-            {
-                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-                return Ok(_admservice.GetAdmissionsByProfileId(userInfo.Id));
-            }
-            catch (System.Exception err)
-            {
-                return BadRequest(err.Message);
-            }
-        }
+        // [HttpGet("admissions")]
+        // public async Task<ActionResult<IEnumerable<Admission>>> GetAdmissions()
+        // {
+        //     try
+        //     {
+        //         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        //         return Ok(_admservice.GetAdmissionsByProfileId(userInfo.Id));
+        //     }
+        //     catch (System.Exception err)
+        //     {
+        //         return BadRequest(err.Message);
+        //     }
+        // }
 
     }
 }
